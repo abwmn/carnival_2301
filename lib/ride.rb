@@ -6,7 +6,7 @@ class Ride
               :total_revenue, 
               :rider_log
 
-  def initialize(details)
+  def initialize(details, carnival=nil)
     @name = details[:name]
     @min_height = details[:min_height]
     @admission_fee = details[:admission_fee]
@@ -22,7 +22,9 @@ class Ride
 
     @total_revenue += @admission_fee
     @rider_log[visitor] += 1
+    visitor.rides_ridden[self.name] += 1
     visitor.spending_money -= @admission_fee
+    visitor.total_spent += @admission_fee
     true
   end
 end
