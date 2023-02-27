@@ -1,5 +1,6 @@
 class Carnival
   attr_reader :name, :duration, :rides
+
   @@total_carnival_revenue = 0
 
   def initialize(name, duration)
@@ -32,19 +33,29 @@ class Carnival
     total
   end
 
-  # def summary
-  #   summary = Hash.new(0)
-  #   visitors = Hash.new(0)
-  #   summary[:revenue] = total_revenue
-  #   @@total_carnival_revenue += total_revenue
-  #   @rides.each do |ride| 
-  #     summary[:visitor_count] += ride.rider_log.keys.length
-  #     ride.rider_log.each do |visitor, times_ridden|
-  #       visitors[visitor] = {
-  #         :favorite_ride => [visitors[visitor][:favorite_ride], times_ridden].max,
-  #         :total_spent =>
-  #       }
-  #     end
-  #   end
-  # end
+  def summary
+    summary = {}
+    summary[:visitor_count] = 0
+    summary[:revenue] = total_revenue
+    @@total_carnival_revenue += total_revenue
+    summary[:visitors] = {}
+    summary[:rides] = {}
+
+    @rides.each do |ride| 
+      summary[:visitor_count] += ride.rider_log.keys.length
+      ride.rider_log.each do |visitor, _|
+        summary[:visitors][visitor.name] = {
+          :favorite_ride => visitor.rides_ridden.key(visitor.rides_ridden.values.max),
+          :total_spent => visitor.total_spent
+        }
+      rider_names = []
+      ride.rider_log.keys.each{|rider|rider_names << rider.name}
+      summary[:rides][ride.name] = {
+        :visitors => rider_names,
+        :total_revenue => ride.total_revenue
+      }
+      end
+    end
+    summary
+  end
 end
