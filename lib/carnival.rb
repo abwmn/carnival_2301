@@ -34,13 +34,15 @@ class Carnival
   end
 
   def summary
-    summary = {}
-    summary[:visitor_count] = 0
-    summary[:revenue] = total_revenue
     @@total_carnival_revenue += total_revenue
-    summary[:visitors] = {}
-    summary[:rides] = {}
-
+    
+    summary = {
+    :visitor_count: 0,
+    :revenue: total_revenue,
+    :visitors: {},
+    :rides: {}
+    }
+    
     @rides.each do |ride| 
       summary[:visitor_count] += ride.rider_log.keys.length
       ride.rider_log.each do |visitor, _|

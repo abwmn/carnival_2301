@@ -22,7 +22,7 @@ class Ride
 
     @total_revenue += @admission_fee
     @rider_log[visitor] += 1
-    visitor.rides_ridden[self.name] += 1
+    visitor.rides_ridden[@name] += 1
     visitor.spending_money -= @admission_fee
     visitor.total_spent += @admission_fee
     true
