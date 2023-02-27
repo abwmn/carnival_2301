@@ -31,7 +31,7 @@ RSpec.describe Carnival do
     expect(@carnival.rides).to eq([@ride1, @ride2, @ride3])
   end
 
-  it 'can calculate stats' do
+  it 'can calculate stats and provide summary' do
     @carnival.add_ride(@ride1)
     @carnival.add_ride(@ride2)
     @carnival.add_ride(@ride3)
@@ -45,9 +45,11 @@ RSpec.describe Carnival do
     @ride2.board_rider(@visitor3)
 
     @ride3.board_rider(@visitor1)
-    
+
     expect(@carnival.most_popular_ride).to eq(@ride1)
     expect(@carnival.most_profitable_ride).to eq(@ride2)
     expect(@carnival.total_revenue).to eq(11)
+    expect(@carnival.summary[:rides]).to be_a(Hash)
+    print(@carnival.summary)
   end
 end
