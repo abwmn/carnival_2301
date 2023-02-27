@@ -37,12 +37,12 @@ class Carnival
     @@total_carnival_revenue += total_revenue
     
     summary = {
-    :visitor_count: 0,
-    :revenue: total_revenue,
-    :visitors: {},
-    :rides: {}
+    :visitor_count => 0,
+    :revenue => total_revenue,
+    :visitors => {},
+    :rides => {}
     }
-    
+
     @rides.each do |ride| 
       summary[:visitor_count] += ride.rider_log.keys.length
       ride.rider_log.each do |visitor, _|
@@ -50,6 +50,7 @@ class Carnival
           :favorite_ride => visitor.rides_ridden.key(visitor.rides_ridden.values.max),
           :total_spent => visitor.total_spent
         }
+        
       rider_names = []
       ride.rider_log.keys.each{|rider|rider_names << rider.name}
       summary[:rides][ride.name] = {
